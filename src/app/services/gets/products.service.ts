@@ -61,6 +61,13 @@ export class ProductsService {
       img:"assets/img/products/product-img-1.jpg",
       precio:"6.40",
       categoria:"Lacteos"
+    },
+    {
+      nombre:"Jamón",
+      marca:"Razzeto",
+      img:"assets/img/products/product-img-1.jpg",
+      precio:"6.40",
+      categoria:"Embutidos"
     }
   ]
   constructor() { }

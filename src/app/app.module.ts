@@ -26,7 +26,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AuthGuard } from './services/logicdiraba/auth.guard';
 import { AuthService } from './services/logicdiraba/auth.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemComponent } from './components/shop/item/item.component';
 
 @NgModule({
@@ -59,6 +59,7 @@ import { ItemComponent } from './components/shop/item/item.component';
     BrowserModule,
     APP_ROUTING,
     ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     AuthGuard,
