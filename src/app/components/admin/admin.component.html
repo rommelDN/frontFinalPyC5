@@ -1,0 +1,58 @@
+<div *ngIf="isAuthenticated()">
+  <div class="layer"></div>
+  <!-- ! Body -->
+  <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+  <div class="page-flex">
+    <!-- ! Sidebar -->
+    <aside class="sidebar">
+      <app-adnavbar></app-adnavbar>
+    </aside>
+    <div class="main-wrapper">
+      <!-- ! Main nav -->
+      <nav class="main-nav--bg">
+        <app-topnavbar></app-topnavbar>
+        
+      </nav>
+      <!-- ! Main -->
+      <main class="main users chart-page" id="skip-target">
+        <div class="container">
+          <h2 class="main-title">Dashboard</h2>
+          <app-card></app-card>
+          <div class="row">
+            <div class="col-lg-9">
+              <div class="chart">
+                <canvas id="myChart" aria-label="Site statistics" role="img"></canvas>
+              </div>
+                
+              <app-table></app-table>
+            </div>
+            <app-popular class="col-lg-3"></app-popular>
+            
+          </div>
+        </div>
+      </main>
+      <!-- ! Footer -->
+      <footer class="footer">
+        <div class="container footer--flex">
+          <div class="footer-start">
+            <p>2021 © Elegant Dashboard - <a href="elegant-dashboard.com" target="_blank"
+                rel="noopener noreferrer">elegant-dashboard.com</a></p>
+          </div>
+          <ul class="footer-end">
+            <li><a href="##">About</a></li>
+            <li><a href="##">Support</a></li>
+            <li><a href="##">Puchase</a></li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
+<div *ngIf="!isAuthenticated()">
+  <p>No estás autenticado. Inicia sesión para acceder al perfil.</p>
+  <ul>
+    <li><a routerLink="/home">Home</a>
+    </li>
+  </ul>
+</div>
+

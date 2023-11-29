@@ -1,0 +1,8 @@
+.body-e {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+    border: solid 5px red;
+    align-items: center;
+}

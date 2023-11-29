@@ -1,0 +1,9 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+    height: 5rem;
+    border: solid 5px blueviolet;
+    align-items: center;
+}

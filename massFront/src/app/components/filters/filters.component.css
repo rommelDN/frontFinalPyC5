@@ -1,0 +1,10 @@
+.filters-e {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 10rem;
+    height: 100%;
+    gap: 2rem;
+    border: solid 5px olivedrab;
+    align-items: center;
+}
