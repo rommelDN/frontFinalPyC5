@@ -1,9 +1,9 @@
 
     <div class="single-product-item">
         <div class="product-image">
-            <a href="single-product.html"><img [src]="producto.img" alt=""></a>
+            <a><img [src]="product.img" alt=""></a>
         </div>
-        <h3>{{producto.nombre}}</h3>
-        <p class="product-price"><span>Por Kg</span>{{producto.precio}}</p>
-        <a (click)="addToCart(producto)" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+        <h3>{{product.product}}</h3>
+        <p class="product-price"><span>Por Kg</span>{{product.price}}</p>
+        <a (click)="addToCart(product)" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
     </div>

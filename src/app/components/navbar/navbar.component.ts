@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/logicdiraba/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,12 @@ import { Component } from '@angular/core';
   '../../../assets/css/css/style.css',
   '../../../assets/login/css/style.css',]
 })
-export class NavbarComponent {
+export class NavbarComponent{
 
+  constructor(private authService: AuthService) {}
+  logout(): void {
+    this.authService.logout();
+    // Puedes redirigir a la página de inicio u otra página después del logout
+    // Ejemplo: this.router.navigate(['/home']);
+  }
 }

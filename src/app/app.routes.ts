@@ -9,6 +9,10 @@ import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { ProductsComponent } from './components/admin/products/products.component';
+import { AdminGuard } from './services/logicdiraba/admin.guard';
+import { VentasComponent } from './components/admin/ventas/ventas.component';
+import { ComprasComponent } from './components/compras/compras.component';
 
 
 const APP_ROUTES : Routes = [
@@ -18,7 +22,10 @@ const APP_ROUTES : Routes = [
   {path:'news', component: NewsComponent },
   {path:'shop', component: ShopComponent },
   {path:'cart', component: CartComponent },
-  {path:'admin', component: AdminComponent },
+  {path:'admin', component: AdminComponent,canActivate:[AdminGuard] },
+  {path:'products', component: ProductsComponent },
+  {path:'sells', component: VentasComponent },
+  {path:'compras', component: ComprasComponent },
   {path:'login', component: LoginComponent },
   {path:'register', component: RegisterComponent },
   { path: 'not-found', component: NotfoundComponent },

@@ -27,13 +27,19 @@
                                     <li><a routerLink="/cart">Cart</a></li>
                                 </ul>
                             </li>
+                            <li><a class="mobile-hide search-bar-icon" routerLink="/login"><i class="fs"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                              </svg></i></a>
+                                <ul class="sub-menu">
+                                    <li><a (click)="logout()">Logout</a></li>
+                                </ul>
+                            </li>
                             <li>
                                 <div class="header-icons">
-                                    
-                                    <a class="mobile-hide search-bar-icon" routerLink="/login"><i class="fs"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                      </svg></i></a>
                                     <a class="shopping-cart" routerLink="/cart"><i class="fas fa-shopping-cart"></i></a>
+                                        <ul class="sub-menu">
+                                            <li><a routerLink="/compras">Compras</a></li>
+                                        </ul>
                                     
                                 </div>
                             </li>

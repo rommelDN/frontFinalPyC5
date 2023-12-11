@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../gets/products.service';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { AuthService, User } from '../logicdiraba/auth.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +11,9 @@ export class CartService {
   private cartTotal: number = 0;
   // Observable para notificar cambios en los elementos del carrito
   cartItemsChanged: Subject<void> = new Subject<void>(); 
+
+  constructor(private http: HttpClient,private authService:AuthService) {}
+
 
   getCartItems(): { product: Product; quantity: number }[] {
     return this.cartItems;
@@ -35,7 +40,6 @@ export class CartService {
     this.calculateCartTotal();
     this.cartItemsChanged.next();
   }
-  
 
   getCartItemCount(): number {
     return this.cartItems.reduce((count, item) => count + item.quantity, 0);
@@ -54,7 +58,7 @@ export class CartService {
   private calculateCartTotal(): void {
     // Recalcula el total del carrito aquí
     this.cartTotal = this.cartItems.reduce((total, item) => {
-      const itemPrecio = parseFloat(item.product.precio);
+      const itemPrecio = item.product.price;
       const itemQuantity = parseFloat(item.quantity.toString());
   
       if (!isNaN(itemPrecio) && !isNaN(itemQuantity)) {
@@ -70,5 +74,30 @@ export class CartService {
     return this.cartTotal;
   }
 
+  checkout(productId: string, userResponse: any, quantity: number): void {
+    const user = userResponse.user; 
+    
+    console.log('Username: ',user);
+      const checkoutData = {
+        username: user.username,
+        id: productId,
+        cantidad: quantity,
+      };
+      
+
+      this.http.post('http://localhost:9000/api/car/add', checkoutData).subscribe(
+        (response) => {
+          console.log('Compra registrada con éxito', response);
+          // Limpiar el carrito después de una compra exitosa
+          this.cartItems = [];
+          this.cartTotal = this.getCartTotal();
+          this.cartItemsChanged.next();
+        }
+      );
+    
+  }
+
+
 }
+
 

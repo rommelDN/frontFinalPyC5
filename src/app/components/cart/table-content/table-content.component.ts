@@ -12,6 +12,7 @@ interface CartItem {
   templateUrl: './table-content.component.html',
   styleUrls: ['./table-content.component.css']
 })
+
 export class TableContentComponent implements OnInit{
   cartItems: CartItem[] = [];
   cartTotal: number = 0;

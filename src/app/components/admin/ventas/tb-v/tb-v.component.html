@@ -1,0 +1,49 @@
+<!-- tb-v.component.html -->
+<div class="users-table table-wrapper">
+    <table class="posts-table">
+      <thead>
+        <tr class="users-table-info">
+          <th>Cliente</th>
+          <th>Imagen</th>
+          <th>Producto</th>
+          <th>Categoria</th>
+          <th>Marca</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Total</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let sale of salesData">
+          <tr *ngIf="sale.shopping_car.products.length > 0">
+            <td>{{ sale.username }}</td>
+            <td>
+              <label class="users-table__checkbox">
+                <div class="categories-table-img">
+                  <img [src]="sale.shopping_car.products[0]?.img" alt="{{ sale.shopping_car.products[0]?.product }}">
+                </div>
+              </label>
+            </td>
+            <td>{{ sale.shopping_car.products[0]?.product }}</td>
+            <td>{{ sale.shopping_car.products[0]?.category }}</td>
+            <td>{{ sale.shopping_car.products[0]?.brand }}</td>
+            <td>{{ sale.shopping_car.products[0]?.cantidad }}</td>
+            <td>{{ sale.shopping_car.products[0]?.price }}</td>
+            <td>{{ calculateTotalPrice(sale.shopping_car.products) }}</td>
+            <td>
+              <button (click)="toggleProducts(sale)">Ver Lista</button>
+            </td>
+          </tr>
+          <tr *ngIf="sale.showProducts">
+            <td colspan="8">
+              <!-- Aquí está la lista desplegable de productos -->
+              <div *ngFor="let product of sale.shopping_car.products">
+                {{ product.product }} - {{ product.price }}
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+</div>

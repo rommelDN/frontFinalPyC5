@@ -13,8 +13,8 @@
         <tr class="table-body-row" *ngFor="let item of cartItems; let i = index">
             <td class="product-remove"><a (click)="removeFromCart(i)"><i class="far fa-window-close"></i></a></td>
             <td class="product-image"><img [src]="item.product.img" alt=""></td>
-            <td class="product-name">{{ item.product.nombre }}</td>
-            <td class="product-price">{{ item.product.precio }}</td>
+            <td class="product-name">{{ item.product.product }}</td>
+            <td class="product-price">{{ item.product.price }}</td>
             <td class="product-quantity">
                 <input type="number" placeholder="0" [(ngModel)]="item.quantity" (change)="updateCartItem(i)">
               </td>

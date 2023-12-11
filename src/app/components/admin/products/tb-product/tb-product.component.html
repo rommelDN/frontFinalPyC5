@@ -1,0 +1,40 @@
+
+<div class="users-table table-wrapper">
+    <table class="posts-table">
+        <thead>
+            <tr class="users-table-info">
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Categoria</th>
+                <th>Marca</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of products">
+            <td>
+                <label class="users-table__checkbox">
+                    <div class="categories-table-img">
+                        <img [src]="product.img" alt="">
+                    </div>
+                </label>
+            </td>
+            <td>
+                {{ product.product}}
+            </td>
+            <td>
+                {{ product.category}}
+            </td>
+            <td>{{ product.brand}}</td>
+            <td>{{ product.price}} $</td>
+            <td>
+                <button class="btn btn-warning" (click)="openEditModal(product)">Editar</button>
+                <button class="btn btn-danger ml-3" (click)="deleteProduct(product)">Eliminar</button>
+            </td>
+            
+        </tr>
+        
+        </tbody>
+    </table>
+</div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/logicdiraba/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,25 +19,22 @@ import { Router } from '@angular/router';
   '../../../assets/login/css/style.css',]
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  username: string = '';
+  password: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-  }
+  constructor(private authService: AuthService,private userService: UserService) {}
 
   onSubmit(): void {
-    const username = this.loginForm.value.username;
-    const password = this.loginForm.value.password;
-
-    if (this.authService.login(username, password)) {
-      // Redirige a la página de perfil después del inicio de sesión
-      this.router.navigate(['/admin']);
-    } else {
-      // Muestra un mensaje de error en caso de falla de autenticación
-      console.log('Error de inicio de sesión');
-    }
+    this.authService.login(this.username, this.password).subscribe(
+      (response) => {
+        console.log(response);
+        this.authService.processLogin(response);
+        this.userService.setUser(response.user);
+      },
+      (error) => {
+        console.error('Error durante el inicio de sesión', error);
+        // Manejar el error de inicio de sesión según sea necesario
+      }
+    );
   }
 }

@@ -13,7 +13,4 @@ export class CartComponent {
     return this.authService.isAuthenticatedUser();
   }
 
-  logout(): void {
-    this.authService.logout();
-  }
 }

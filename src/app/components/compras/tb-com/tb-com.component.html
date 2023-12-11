@@ -1,0 +1,23 @@
+<!-- tb-com.component.html -->
+
+<table class="cart-table">
+  <thead class="cart-table-head">
+    <tr class="table-head-row">
+      <th class="product-image">Product Image</th>
+      <th class="product-name">Name</th>
+      <th class="product-price">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="userData">
+      <tr class="table-body-row" *ngFor="let product of userData.shopping_car.products">
+        <td class="product-image"><img [src]="product.img" alt="{{ product.product }}"></td>
+        <td class="product-name">{{ product.product }}</td>
+        <td class="product-price">{{ product.price }}</td>
+        
+      </tr>
+    </ng-container>
+    
+    
+  </tbody>
+</table>

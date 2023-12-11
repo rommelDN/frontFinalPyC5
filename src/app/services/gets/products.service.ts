@@ -1,117 +1,103 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, catchError, map } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 
 export class ProductsService {
-  private products: Product[]=[
-    {
-      nombre:"Fresas",
-      marca:"Arbolera",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"5.40",
-      categoria:"Frutas",
-    },
-    {
-      nombre:"Mandarina",
-      marca:"Arbolera",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"3.40",
-      categoria:"Frutas"
-    },
-    {
-      nombre:"Naranja",
-      marca:"Arbolera",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"6.40",
-      categoria:"Frutas"
-    },
-    {
-      nombre:"Naranja",
-      marca:"Arbolera",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"6.40",
-      categoria:"Frutas"
-    },
-    {
-      nombre:"Naranja",
-      marca:"Arbolera",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"6.40",
-      categoria:"Frutas"
-    },
-    {
-      nombre:"Naranja",
-      marca:"Arbolera",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"6.40",
-      categoria:"Frutas"
-    },
-    {
-      nombre:"Naranja",
-      marca:"Arbolera",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"6.40",
-      categoria:"Frutas"
-    },
-    {
-      nombre:"Leche",
-      marca:"Gloria",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"6.40",
-      categoria:"Lacteos"
-    },
-    {
-      nombre:"Jamón",
-      marca:"Razzeto",
-      img:"assets/img/products/product-img-1.jpg",
-      precio:"6.40",
-      categoria:"Embutidos"
-    }
-  ]
-  constructor() { }
+  private apiUrl = 'http://localhost:9000/api/products';
+  constructor(private http: HttpClient) { }
 
-  getProducts = () => this.products;
+  deleteProduct(id:string):Observable<Product>{
+    const deleteProUrl = `${this.apiUrl}/${id}`;
+    return this.http.delete<Product>(deleteProUrl);
 
-  getProduct = (id:any) => this.products[id];
-
-  getProductsByPageAndCategory(page: number, itemsPerPage: number, category: string): Product[] {
-    const filteredProducts = category === 'All' ? this.products : this.products.filter(product => product.categoria === category);
-    const startIndex = (page - 1) * itemsPerPage;
-    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
   }
 
+  editProduct(id: string, updatedData: Partial<Product>): Observable<Product> {
+    const editProductUrl = `${this.apiUrl}/${id}`;
+    return this.http.put<Product>(editProductUrl, updatedData);
+  }
+
+  createProduct(productData: FormData): Observable<Product> {
+    const createProductUrl = `${this.apiUrl}/create`;
+    return this.http.post<Product>(createProductUrl, productData);
+  }
+  
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl);
+  }
+
+  getProduct(id: string): Observable<Product> {
+    const productUrl = `${this.apiUrl}/${id}`;
+    return this.http.get<Product>(productUrl);
+  }
+
+  getProductsByPageAndCategory(page: number, itemsPerPage: number, category: string): Observable<Product[]> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('itemsPerPage', itemsPerPage.toString());
+  
+    return this.http.get<Product[]>(this.apiUrl, { params }).pipe(
+      map(products => {
+        // Filtrar productos por categoría
+        if (category && category !== 'All') {
+          return products.filter(product => product.category === category);
+        } else {
+          return products;
+        }
+      }),
+      catchError(error => {
+        console.error('Error en la solicitud HTTP:', error);
+        throw error;
+      })
+    );
+  }
+  
+  
+  
   // Método para obtener una porción de productos según la página
-  getProductsByPage = (page: number, itemsPerPage: number): Product[] => {
-    const startIndex = (page - 1) * itemsPerPage;
-    return this.products.slice(startIndex, startIndex + itemsPerPage);
-  };
+  getProductsByPage(page: number, itemsPerPage: number): Observable<Product[]> {
+    const params = { page: page.toString(), itemsPerPage: itemsPerPage.toString() };
+    return this.http.get<Product[]>(this.apiUrl, { params });
+  }
 
   // Opcional: Método para obtener el número total de páginas
-  getTotalPages = (itemsPerPage: number): number => {
-    return Math.ceil(this.products.length / itemsPerPage);
-  };
+  getTotalPages(itemsPerPage: number): Observable<number> {
+    return this.http.get<Product[]>(this.apiUrl).pipe(
+      map(products => Math.ceil(products.length / itemsPerPage))
+    );
+  }
 
-  getCategories = (): string[] => {
-    // Obtener todas las categorías únicas de los productos
-    const uniqueCategories = Array.from(new Set(this.products.map(product => product.categoria)));
-    return ['All', ...uniqueCategories]; // Agregar 'All' como opción para mostrar todos los productos
-  };
+  getCategories(): Observable<string[]> {
+    return this.http.get<Product[]>(this.apiUrl).pipe(
+      map(products => {
+        const uniqueCategories = Array.from(new Set(products.map(product => product.category)));
+        return ['All', ...uniqueCategories];
+      })
+    );
+  }
+  
 
-  getProductsByCategory = (category: string): Product[] => {
-    // Filtrar productos por categoría
-    return category === 'All' ? this.products : this.products.filter(product => product.categoria === category);
-  };
-
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl).pipe(
+      map(products => {
+        if (category === 'All') {
+          return products;
+        } else {
+          return products.filter(product => product.category === category);
+        }
+      })
+    );
+  }
 
 }
-export interface Product{
-  nombre:string;
-  marca:string;
-  img:string;
-  precio:string;
-  categoria:string;
-  //indice?:number;
-
+export interface Product {
+  _id:string;
+  product: string;
+  brand: string;
+  category: string;
+  price: number;
+  img: string;
 }

@@ -1,0 +1,37 @@
+<div class="">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="fs-3" id="exampleModalToggleLabel">Formulario</h3>
+    </div>
+    <div class="modal-body">
+      <form #form="ngForm" enctype="multipart/form-data" (ngSubmit)="saveChanges()">
+        <div class="mb-3">
+          <label for="product" class="col-form-label">Nombre:</label>
+          <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"
+            id="product" name="product" [(ngModel)]="product.product" required>
+        </div>
+        <div class="mb-3">
+          <label for="brand" class="col-form-label">Marca:</label>
+          <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"
+            id="brand" name="brand" [(ngModel)]="product.brand" required>
+        </div>
+        <div class="mb-3">
+          <label for="category" class="col-form-label">Categoria:</label>
+          <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"
+            id="category" name="category" [(ngModel)]="product.category" required>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <input type="text" class="form-control" id="price" name="price" [(ngModel)]="product.price" required>
+        </div>
+        <div class="mb-3">
+          <input type="file" id="img" name="img" [(ngModel)]="product.img">
+        </div>
+        <button type="submit" class="btn btn-primary">Editar</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()">Close</button>
+    </div>
+  </div>
+</div>
